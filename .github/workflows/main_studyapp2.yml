@@ -26,6 +26,11 @@ jobs:
       - name: Build with dotnet
         run: dotnet build StudyHelper/StudyHelper.csproj --configuration Release
 
+
+        #tests
+      - name: Run tests
+        run: dotnet test StudyHelper.Tests/StudyHelper.Tests.csproj --configuration Release --no-build
+
       - name: dotnet publish
         run: dotnet publish StudyHelper/StudyHelper.csproj --configuration Release --output ./publish
 
