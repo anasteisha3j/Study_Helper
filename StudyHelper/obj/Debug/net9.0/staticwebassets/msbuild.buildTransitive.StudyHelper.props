@@ -1,3 +1,3 @@
 ﻿<Project>
-  <Import Project="..\buildMultiTargeting\studyhelper.props" />
+  <Import Project="..\buildMultiTargeting\StudyHelper.props" />
 </Project>

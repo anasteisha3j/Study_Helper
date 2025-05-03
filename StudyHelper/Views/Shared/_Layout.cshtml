@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using StudyApp.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     @await RenderSectionAsync("Styles", required: false)
@@ -82,10 +85,19 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Study" asp-action="Index">Навчальні матеріали</a>
                         </li>
-                        
+                        <li class="nav-item"></li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                                <a href="@Url.Action("Logout", "Account")" class="nav-link">
+                                    @* <i class="bi bi-box-arrow-right"></i>  *@Вийти
+                                </a>
+                        }
+                        </li>
                     </ul>
                     @* <partial name="_LoginPartial" /> *@
+                     
                 </div>
+                   
             </div>
         </nav>
     </header>

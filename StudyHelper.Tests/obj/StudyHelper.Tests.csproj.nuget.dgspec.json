@@ -1,33 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj": {}
+    "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj": {}
   },
   "projects": {
-    "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj": {
+    "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj",
         "projectName": "StudyHelper.Tests",
-        "projectPath": "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\obj\\",
+        "projectPath": "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj",
+        "packagesPath": "C:\\Users\\serhi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper.Tests\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\serhi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\StudyHelper111\\Study_Helper\\StudyHelper\\studyhelper.csproj": {
-                "projectPath": "D:\\StudyHelper111\\Study_Helper\\StudyHelper\\studyhelper.csproj"
+              "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper\\studyhelper.csproj": {
+                "projectPath": "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper\\studyhelper.csproj"
               }
             }
           }
@@ -95,26 +101,32 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\StudyHelper111\\Study_Helper\\StudyHelper\\studyhelper.csproj": {
+    "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper\\studyhelper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\StudyHelper111\\Study_Helper\\StudyHelper\\studyhelper.csproj",
+        "projectUniqueName": "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper\\studyhelper.csproj",
         "projectName": "studyhelper",
-        "projectPath": "D:\\StudyHelper111\\Study_Helper\\StudyHelper\\studyhelper.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\StudyHelper111\\Study_Helper\\StudyHelper\\obj\\",
+        "projectPath": "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper\\studyhelper.csproj",
+        "packagesPath": "C:\\Users\\serhi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\serhi\\Desktop\\Нова папка\\Study_Helper\\StudyHelper\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\serhi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -179,7 +191,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

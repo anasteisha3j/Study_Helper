@@ -12,15 +12,7 @@
         <h1 class="display-4 mb-4">Вітаємо у StudyApp</h1>
     </div>
 
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <div class="user-section text-center mb-5">
 
-            <a href="@Url.Action("Logout", "Account")" class="btn btn-danger btn-lg">
-                <i class="bi bi-box-arrow-right"></i> Вийти
-            </a>
-        </div>
-    }
 
     <div class="features-section">
         <div class="row justify-content-center">
