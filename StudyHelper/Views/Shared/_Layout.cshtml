@@ -85,7 +85,7 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Study" asp-action="Index">Навчальні матеріали</a>
                         </li>
-                        <li class="nav-item"></li>
+                        <li class="nav-item ms-auto">
                         @if (SignInManager.IsSignedIn(User))
                         {
                                 <a href="@Url.Action("Logout", "Account")" class="nav-link">
