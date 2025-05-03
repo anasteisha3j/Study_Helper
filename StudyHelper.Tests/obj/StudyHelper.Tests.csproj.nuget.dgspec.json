@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\StudyHelper111\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj": {}
+    "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj": {}
   },
   "projects": {
-    "D:\\StudyHelper111\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj": {
+    "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\StudyHelper111\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj",
+        "projectUniqueName": "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj",
         "projectName": "StudyHelper.Tests",
-        "projectPath": "D:\\StudyHelper111\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj",
+        "projectPath": "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\StudyHelper111\\Study_Helper\\StudyHelper.Tests\\obj\\",
+        "outputPath": "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"

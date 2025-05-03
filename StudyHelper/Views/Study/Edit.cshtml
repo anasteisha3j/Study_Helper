@@ -18,13 +18,13 @@
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
                 <div class="mb-3">
-                    <label asp-for="Title" class="form-label fw-bold"></label>
+                    <label asp-for="Title" class="form-label fw-bold">Назва</label>
                     <input asp-for="Title" class="form-control" required />
                     <span asp-validation-for="Title" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Category" class="form-label fw-bold"></label>
+                    <label asp-for="Category" class="form-label fw-bold">Категорія</label>
                     <select asp-for="Category" class="form-select" required>
                         <option value="">Оберіть категорію</option>
                         <option value="Лекції">Лекції</option>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Tags" class="form-label fw-bold"></label>
+                    <label asp-for="Tags" class="form-label fw-bold">Теги</label>
                     <input asp-for="Tags" class="form-control" placeholder="Наприклад: математика, алгебра" />
                     <span asp-validation-for="Tags" class="text-danger small"></span>
                 </div>

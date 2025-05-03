@@ -9348,11 +9348,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\StudyHelper111\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj",
+      "projectUniqueName": "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj",
       "projectName": "StudyHelper.Tests",
-      "projectPath": "D:\\StudyHelper111\\Study_Helper\\StudyHelper.Tests\\StudyHelper.Tests.csproj",
+      "projectPath": "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\StudyHelper.Tests.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "D:\\StudyHelper111\\Study_Helper\\StudyHelper.Tests\\obj\\",
+      "outputPath": "D:\\StudyHelper111\\Study_Helper\\studyhelper.tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -9439,5 +9439,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
+    }
+  ]
 }
