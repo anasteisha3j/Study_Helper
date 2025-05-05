@@ -1,112 +1,152 @@
-
-
 @model IEnumerable<StudyApp.Models.TaskModel>
 
 @{
-    ViewData["Title"] = "Мої завдання";
-    
+    ViewData["Title"] = "Завдання";
 }
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="display-4">@ViewData["Title"]</h2>
+        </div>
+        <div class="col-auto">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Додати завдання
+            </a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> У вас поки немає завдань. Додайте своє перше завдання!
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var task in Model)
+            {
+                <div class="col-md-12 mb-3">
+                    <div class="card task-card @(task.IsCompleted ? "completed" : "")">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="task-info">
+                                    <h5 class="card-title mb-2">@task.Title</h5>
+                                    <p class="card-text text-muted mb-2">@task.Description</p>
+                                    <div class="task-meta">
+                                        <span class="deadline">
+                                            <i class="far fa-calendar-alt"></i>
+                                            @task.Deadline.ToString("dd.MM.yyyy")
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="task-actions">
+                                    <div class="btn-group">
+                                        <a asp-action="Edit" asp-route-id="@task.Id" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form asp-action="Delete" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@task.Id" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" 
+                                                    onclick="return confirm('Ви впевнені, що хочете видалити це завдання?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-action="ToggleComplete" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@task.Id" />
+                                            <button type="submit" class="btn btn-sm @(task.IsCompleted ? "btn-success" : "btn-outline-success")">
+                                                <i class="fas @(task.IsCompleted ? "fa-check-circle" : "fa-circle")"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (ViewBag.TotalPages > 1)
+        {
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    }
+</div>
 
 <style>
     .task-card {
-        transition: all 0.3s ease;
-        border-left: 4px solid #6c757d;
+        transition: transform 0.2s;
+        border: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    
+
     .task-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    
-    
-    .task-actions .btn {
-        min-width: 40px;
+
+    .task-card.completed {
+        background-color: #f8f9fa;
     }
-    
-    .task-badge {
-        font-size: 0.8rem;
+
+    .task-card.completed .card-title {
+        text-decoration: line-through;
+        color: #6c757d;
     }
-    .completed-task-icon {
-        color: #28a745;
-        margin-right: 8px;
+
+    .task-meta {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .deadline {
+        margin-right: 1rem;
+    }
+
+    .task-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .pagination .page-link {
+        color: #007bff;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        background-color: #fff;
+        border-color: #dee2e6;
     }
 </style>
-
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>@ViewData["Title"]</h1>
-        <a asp-controller="Task" asp-action="Create" class="btn btn-primary">
-            <i class="fas fa-plus-circle me-1"></i> Додати завдання
-        </a>
-    </div>
-
-    <div class="task-list">
-        @foreach (var task in Model)
-        {
-            <div class="card mb-3 task-card @(task.IsCompleted ? "completed" : "")">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="flex-grow-1">
-                            <div class="d-flex align-items-center mb-2">
-                             @if(task.IsCompleted)
-                                {
-                                    <i class="fas fa-check-circle completed-task-icon"></i>
-                                }
-                                <h5 class="mb-0 task-title @(task.IsCompleted ? "completed" : "")">
-                                    @task.Title
-                                </h5>
-                                <span class="badge task-badge ms-2 @(task.IsCompleted ? "bg-success" : "bg-warning")">
-                                    @(task.IsCompleted ? "Виконано" : "В роботі")
-                                </span>
-                            </div>
-                            
-                            @if (!string.IsNullOrEmpty(task.Description))
-                            {
-                                <p class="text-muted mb-2">@task.Description</p>
-                            }
-                            
-                            <div class="d-flex align-items-center">
-                                <i class="far fa-clock text-muted me-1"></i>
-                                <small class="text-muted">
-                                    @task.Deadline.ToString("dd.MM.yyyy HH:mm")
-                                </small>
-                            </div>
-                        </div>
-                        
-                        <div class="task-actions d-flex flex-column flex-md-row">
-                            @if (!task.IsCompleted)
-                            {
-                                <form asp-controller="Task" asp-action="MarkCompleted" method="post" class="me-2">
-                                    <input type="hidden" name="id" value="@task.Id" />
-                                    <button type="submit" class="btn btn-sm btn-outline-success mb-2 mb-md-0">
-                                        <i class="fas fa-check"></i> Готово
-                                    </button>
-                                </form>
-                            }
-                            
-                            <a asp-controller="Task" asp-action="Edit" asp-route-id="@task.Id" 
-                               class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            
-                            <form asp-controller="Task" asp-action="Delete" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@task.Id" />
-                                <button type="submit" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Видалити це завдання?')">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-        
-        @if (!Model.Any())
-        {
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i> У вас ще немає завдань. Додайте перше!
-            </div>
-        }
-    </div>
-</div>

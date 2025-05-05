@@ -15,6 +15,7 @@ namespace StudyApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private const int PageSize = 5;
 
         public NoteController(ApplicationDbContext context, UserManager<User> userManager)
         {
@@ -22,7 +23,7 @@ namespace StudyApp.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -38,13 +39,23 @@ namespace StudyApp.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            Console.WriteLine($"User Retrieved: {user.Email}, {user.Id}");
-            Console.WriteLine($"IsAuthenticated: {User.Identity.IsAuthenticated}");
+            var totalNotes = await _context.Notes
+                .Where(n => n.UserId == user.Id)
+                .CountAsync();
+
+            var totalPages = (int)Math.Ceiling(totalNotes / (double)PageSize);
+            page = Math.Max(1, Math.Min(page, Math.Max(1, totalPages)));
 
             var notes = await _context.Notes
                 .Where(n => n.UserId == user.Id)
+                .OrderByDescending(n => n.CreatedDate)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
                 .ToListAsync();
 
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageSize = PageSize;
 
             return View(notes);
         }

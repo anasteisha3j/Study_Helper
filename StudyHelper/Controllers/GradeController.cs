@@ -12,6 +12,7 @@ namespace StudyApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private const int PageSize = 5;
 
         public GradeController(ApplicationDbContext context, UserManager<User> userManager)
         {
@@ -19,7 +20,7 @@ namespace StudyApp.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -27,9 +28,23 @@ namespace StudyApp.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
+            var totalGrades = await _context.Grades
+                .Where(g => g.UserId == user.Id)
+                .CountAsync();
+
+            var totalPages = (int)Math.Ceiling(totalGrades / (double)PageSize);
+            page = Math.Max(1, Math.Min(page, totalPages));
+
             var grades = await _context.Grades
                 .Where(g => g.UserId == user.Id)
+                .OrderByDescending(g => g.Date)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
                 .ToListAsync();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageSize = PageSize;
 
             return View(grades);
         }

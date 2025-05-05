@@ -15,6 +15,7 @@ namespace StudyApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private const int PageSize = 5;
 
         public TaskController(ApplicationDbContext context,UserManager<User> userManager)
         {
@@ -22,7 +23,7 @@ namespace StudyApp.Controllers
             _userManager=userManager;
         }
 
-       public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -38,17 +39,26 @@ namespace StudyApp.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            Console.WriteLine($"User Retrieved: {user.Email}, {user.Id}");
-            Console.WriteLine($"IsAuthenticated: {User.Identity.IsAuthenticated}");
+            var totalTasks = await _context.Tasks
+                .Where(t => t.UserId == user.Id)
+                .CountAsync();
+
+            var totalPages = (int)Math.Ceiling(totalTasks / (double)PageSize);
+            page = Math.Max(1, Math.Min(page, Math.Max(1, totalPages)));
 
             var tasks = await _context.Tasks
-                .Where(n => n.UserId == user.Id)
+                .Where(t => t.UserId == user.Id)
+                .OrderBy(t => t.Deadline)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
                 .ToListAsync();
 
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageSize = PageSize;
 
             return View(tasks);
         }
-
 
     // GET: /Task/Create
     [HttpGet]

@@ -1,90 +1,143 @@
-
 @model IEnumerable<StudyApp.Models.NoteModel>
 
 @{
-    ViewData["Title"] = "Мої нотатки";
+    ViewData["Title"] = "Нотатки";
 }
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="display-4">@ViewData["Title"]</h2>
+        </div>
+        <div class="col-auto">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Додати нотатку
+            </a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> У вас поки немає нотаток. Додайте свою першу нотатку!
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var note in Model)
+            {
+                <div class="col-md-12 mb-3">
+                    <div class="card note-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-2 note-title">@note.Title</h5>
+                                    
+                                    @if (!string.IsNullOrEmpty(note.Note))
+                                    {
+                                        <p class="text-muted mb-2">@note.Note</p>
+                                    }
+                                    
+                                    <div class="d-flex align-items-center">
+                                        <i class="far fa-calendar-alt text-muted me-1"></i>
+                                        <small class="text-muted note-date">
+                                            Створено: @note.CreatedDate.ToString("dd.MM.yyyy HH:mm")
+                                            @if (note.LastModifiedDate.HasValue)
+                                            {
+                                                <span> | Змінено: @note.LastModifiedDate.Value.ToString("dd.MM.yyyy HH:mm")</span>
+                                            }
+                                        </small>
+                                    </div>
+                                </div>
+                                
+                                <div class="note-actions d-flex">
+                                    <a asp-action="Edit" asp-route-id="@note.Id" 
+                                       class="btn btn-sm btn-outline-primary me-2">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    
+                                    <form asp-action="Delete" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="@note.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Видалити цю нотатку?')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (ViewBag.TotalPages > 1)
+        {
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    }
+</div>
 
 <style>
     .note-card {
-        transition: all 0.3s ease;
-        border-left: 4px solid #6c757d;
+        transition: transform 0.2s;
+        border: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    
+
     .note-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    
-    .note-actions .btn {
-        min-width: 40px;
-    }
-    
+
     .note-date {
-        font-size: 0.8rem;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .note-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .pagination .page-link {
+        color: #007bff;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        background-color: #fff;
+        border-color: #dee2e6;
     }
 </style>
-
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>@ViewData["Title"]</h1>
-        <a asp-controller="Note" asp-action="Create" class="btn btn-primary">
-            <i class="fas fa-plus-circle me-1"></i> Додати нотатку
-        </a>
-    </div>
-
-
-
-    <div class="note-list">
-        @foreach (var note in Model)
-        {
-            <div class="card mb-3 note-card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="flex-grow-1">
-                            <h5 class="mb-2 note-title">@note.Title</h5>
-                            
-                            @if (!string.IsNullOrEmpty(note.Note))
-                            {
-                                <p class="text-muted mb-2">@note.Note</p>
-                            }
-                            
-                            <div class="d-flex align-items-center">
-                                <i class="far fa-calendar-alt text-muted me-1"></i>
-                                <small class="text-muted note-date">
-                                    Створено: @note.CreatedDate.ToString("dd.MM.yyyy HH:mm")
-                                    @if (note.LastModifiedDate.HasValue)
-                                    {
-                                        <span> | Змінено: @note.LastModifiedDate.Value.ToString("dd.MM.yyyy HH:mm")</span>
-                                    }
-                                </small>
-                            </div>
-                        </div>
-                        
-                        <div class="note-actions d-flex">
-                            <a asp-controller="Note" asp-action="Edit" asp-route-id="@note.Id" 
-                               class="btn btn-sm btn-outline-primary me-2">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            
-                            <form asp-controller="Note" asp-action="Delete" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@note.Id" />
-                                <button type="submit" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Видалити цю нотатку?')">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-        
-        @if (!Model.Any())
-        {
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i> У вас ще немає нотаток. Додайте першу!
-            </div>
-        }
-    </div>
-</div>
