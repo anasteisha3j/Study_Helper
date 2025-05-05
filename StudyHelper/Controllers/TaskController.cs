@@ -207,5 +207,21 @@ public async Task<IActionResult> MarkCompleted(int id)
     }
     return RedirectToAction(nameof(Index));
 }
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> ToggleComplete(int id)
+{
+    var user = await _userManager.GetUserAsync(User);
+    var task = await _context.Tasks
+        .FirstOrDefaultAsync(t => t.Id == id && t.UserId == user.Id);
+        
+    if (task != null)
+    {
+        task.IsCompleted = !task.IsCompleted;
+        await _context.SaveChangesAsync();
+    }
+    return RedirectToAction(nameof(Index));
+}
     }
 }
