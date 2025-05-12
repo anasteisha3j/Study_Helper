@@ -7,6 +7,10 @@
     ViewData["Title"] = "Мої конспекти";
 }
 
+<div class="mb-4">
+    <input type="text" id="searchInput" class="form-control" placeholder="Пошук по конспектах..." minlength="3">
+</div>
+
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>@ViewData["Title"]</h1>
@@ -26,7 +30,7 @@
         <div class="row">
             @foreach (var study in Model)
             {
-                <div class="col-md-6 col-lg-4 mb-4">
+                <div class="col-md-6 col-lg-4 mb-4 study-card">
                     <div class="card h-100">
                         <div class="card-header bg-primary text-white">
                             <h5 class="card-title mb-0">@study.Title</h5>
@@ -47,13 +51,16 @@
                                     <ul class="list-group list-group-flush">
                                         @foreach (var file in study.Files)
                                         {
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <a href="@file.StoragePath" download="@file.OriginalName">
+                                         
+                                            <li class="list-group-item d-flex justify-content-between align-items-center" style="gap: 0.5rem;">
+                                                <a href="@file.StoragePath" download="@file.OriginalName" title="@file.OriginalName"
+                                                style="display: inline-block; max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                                     <i class="fas @GetFileIcon(file.FileType) me-2"></i>
                                                     @file.OriginalName
                                                 </a>
-                                                <span class="badge bg-light text-dark">@FormatFileSize(file.FileSize)</span>
+                                                <span class="badge bg-light text-dark" style="white-space: nowrap;">@FormatFileSize(file.FileSize)</span>
                                             </li>
+
                                         }
                                     </ul>
                                 </div>
@@ -111,3 +118,41 @@
         return $"{bytes:0.##} {sizes[order]}";
     }
 }
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+
+    searchInput.addEventListener("input", function () {
+        const query = this.value.trim().toLowerCase();
+        const cards = document.querySelectorAll(".study-card");
+
+        cards.forEach(card => {
+            const original = card.getAttribute("data-original");
+            if (original) card.innerHTML = original;
+
+            if (query.length < 3) {
+                card.style.display = "block";
+                return;
+            }
+
+            const text = card.innerText.toLowerCase();
+
+            if (text.includes(query)) {
+                card.style.display = "block";
+
+                const regex = new RegExp(`(${query})`, "gi");
+
+                card.innerHTML = card.innerHTML.replace(regex, `<mark>$1</mark>`);
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".study-card").forEach(card => {
+            card.setAttribute("data-original", card.innerHTML);
+        });
+    });
+</script>
+

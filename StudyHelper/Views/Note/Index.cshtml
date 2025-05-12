@@ -36,7 +36,7 @@
                                     
                                     @if (!string.IsNullOrEmpty(note.Note))
                                     {
-                                        <p class="text-muted mb-2">@note.Note</p>
+                                        <p class="text-muted mb-2 note-preview">@note.Note</p>
                                     }
                                     
                                     <div class="d-flex align-items-center">
@@ -117,9 +117,34 @@
         font-size: 0.9rem;
     }
 
+
+.note-preview {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 4.5em;
+    position: relative;
+}
+
+.note-preview::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7); 
+    filter: blur(4px);
+    pointer-events: none;
+}
+
+
+
     .note-actions {
         display: flex;
-        gap: 0.5rem;
+        gap: 2;
     }
 
     .pagination .page-link {

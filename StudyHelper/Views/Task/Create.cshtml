@@ -1,39 +1,3 @@
-@* @model StudyApp.Models.TaskModel
-
-@{
-    ViewData["Title"] = "Додати завдання";
-    var minDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
-}
-
-<h2>@ViewData["Title"]</h2>
-
-<form asp-action="Create">
-    <div class="form-group">
-        <label asp-for="Title" class="control-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="Description" class="control-label"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="Deadline" class="control-label"></label>
-        <input asp-for="Deadline" class="form-control" 
-               min="@minDate" 
-               value="@minDate" />
-        <span asp-validation-for="Deadline" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <input type="submit" value="Створити" class="btn btn-primary" />
-    </div>
-</form> *@
-
-
 
 
 @model StudyApp.Models.TaskModel
