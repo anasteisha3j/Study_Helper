@@ -10,6 +10,25 @@
         margin: 0 auto;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background-color: #4e73df;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        margin-bottom: 20px;
+    }
+    .back-button:hover {
+        background-color: #2e59d9;
+        transform: translateY(-1px);
+        color: white;
+        text-decoration: none;
+    }
     .stats {
         display: flex;
         gap: 20px;
@@ -66,6 +85,11 @@
 </style>
 
 <div class="admin-dashboard">
+    <a href="@Url.Action("Index", "Admin")" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Повернутися до панелі адміністратора
+    </a>
+
     <h1>Статистика завантажень користувачів</h1>
     
     <div class="stats">
