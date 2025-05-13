@@ -8,7 +8,7 @@
         padding: 20px;
         max-width: 1200px;
         margin: 0 auto;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Inter', sans-serif;
     }
     .stats {
         display: flex;
@@ -132,6 +132,23 @@
         </div>
     </div>
 
+    <!-- 🔍 Пошук та фільтрація -->
+    <div class="mb-4 d-flex gap-3 align-items-end">
+        <div>
+            <label for="userSearch">Пошук</label>
+            <input type="text" id="userSearch" class="form-control" placeholder="Пошук по імені, email, ролі..." />
+        </div>
+        <div>
+            <label for="activityFilter">Активність</label>
+            <select id="activityFilter" class="form-select">
+                <option value="all">Усі</option>
+                <option value="1">За 1 день</option>
+                <option value="7">За 7 днів</option>
+                <option value="30">За 30 днів</option>
+            </select>
+        </div>
+    </div>
+
     <h2>Управління користувачами</h2>
     <table>
         <thead>
@@ -156,14 +173,14 @@
                     <td>
                         @user.LastActivity.ToString("g")
                         <div class="last-activity">
-                        @{
-                            var timePassed = DateTime.Now - user.LastActivity;
-                            var timeString = "";
-                            if (timePassed.Days > 0) timeString += $"{timePassed.Days} дн. ";
-                            if (timePassed.Hours > 0) timeString += $"{timePassed.Hours} год. ";
-                            timeString += $"{timePassed.Minutes} хв. тому";
-                        }
-                        (@timeString)
+                            @{
+                                var timePassed = DateTime.Now - user.LastActivity;
+                                var timeString = "";
+                                if (timePassed.Days > 0) timeString += $"{timePassed.Days} дн. ";
+                                if (timePassed.Hours > 0) timeString += $"{timePassed.Hours} год. ";
+                                timeString += $"{timePassed.Minutes} хв. тому";
+                            }
+                            (@timeString)
                         </div>
                     </td>
                     <td>
@@ -184,4 +201,55 @@
             }
         </tbody>
     </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("userSearch");
+            const activitySelect = document.getElementById("activityFilter");
+            const rows = document.querySelectorAll("tbody tr");
+
+            function filterTable() {
+                const search = searchInput.value.toLowerCase();
+                const daysFilter = activitySelect.value;
+                const now = new Date();
+
+                rows.forEach(row => {
+                    const name = row.querySelector("td:nth-child(1) strong").textContent.toLowerCase();
+                    const email = row.querySelector("td:nth-child(1) span").textContent.toLowerCase();
+                    const role = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                    const activityText = row.querySelector("td:nth-child(3)").textContent;
+
+                    const matchesSearch =
+                        name.includes(search) ||
+                        email.includes(search) ||
+                        role.includes(search);
+
+                    let matchesActivity = true;
+
+                    if (daysFilter !== "all") {
+                        const dateMatch = activityText.match(/(\d{1,2})\.(\d{1,2})\.(\d{4}) (\d{1,2}):(\d{2})/);
+                        if (dateMatch) {
+                            const day = parseInt(dateMatch[1]);
+                            const month = parseInt(dateMatch[2]) - 1; 
+                            const year = parseInt(dateMatch[3]);
+                            const hours = parseInt(dateMatch[4]);
+                            const minutes = parseInt(dateMatch[5]);
+
+                            const lastActive = new Date(year, month, day, hours, minutes);
+                            const diffDays = (now - lastActive) / (1000 * 60 * 60 * 24);
+                            matchesActivity = diffDays <= parseInt(daysFilter);
+                        } else {
+                            matchesActivity = false;
+                        }
+                    }
+
+                    row.style.display = (matchesSearch && matchesActivity) ? "" : "none";
+                });
+            }
+
+            searchInput.addEventListener("input", filterTable);
+            activitySelect.addEventListener("change", filterTable);
+        });
+    </script>
+
 </div>
